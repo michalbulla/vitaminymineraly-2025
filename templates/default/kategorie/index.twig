@@ -1,0 +1,34 @@
+{% extends "_layouts/base" %}
+{% set uri = entry.uri|default('blog') %}
+{% set pageHeading = entry.pageHeading|default(entry.title) %}
+
+{% set showSidebar = false %}
+
+{% block pageLayout %}
+  {% embed '_layouts/page/default' %}
+    {% block contentLayout %}
+      {% embed '_layouts/content/default' %}
+
+        {% block mainContent %}
+          {% cache %}
+            <h1 class="main-heading">{{ pageHeading }}</h1>
+            {% if entry.descendants|length %}
+              <div class="md:grid md:grid-cols-3 md:gap-8 mb-12">
+                {% for child in entry.descendants.all() %}
+                  <div class="grid-block col-span-1">
+                    <div class="grid-image ">
+                      <a href="{{ child.url }}">
+                        <img class="img-responsive" src="{{ child.image.one.url('obrazok') }}" alt="{{ child.image.one.title }}">
+                      </a>
+                    </div>
+                    <h2 class="text-center font-bold text-2xl text-brand-one mt-2"><a href="{{ child.url }}">{{ child.title }}</a></h2>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endcache %}
+        {% endblock %}
+      {% endembed %}
+    {% endblock %}
+  {% endembed %}
+{% endblock %}

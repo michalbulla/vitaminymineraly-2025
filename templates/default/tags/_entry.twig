@@ -1,0 +1,123 @@
+{% extends "_layouts/base" %}
+{% set uri = entry.uri|default('blog') %}
+{% set thisTag = craft.tags.group('tagy').slug(tag).one() %}
+{% set pageHeading = '"' ~ thisTag.title ~'" - články, produkty a štúdie' %}
+
+{% set thisTag = craft.tags.slug(tag).one %}
+
+{# Related Articles #}
+{% set relatedArticles = craft.entries.section(['hlavneStranky', 'clanky']).relatedTo(thisTag).all() %}
+
+{# Related Products #}
+{# {% set relatedProducts = craft.entries.section('produkty').relatedTo(thisTag).all() %} #}
+
+{# Related Studies #}
+{% set relatedStudies = craft.entries.section('studie').relatedTo(thisTag).all() %}
+
+{% set showSidebar = true %}
+
+{% block pageLayout %}
+  {% embed '_layouts/page/default' %}
+    {% block subNavMobile %}
+      
+    {% endblock %}
+    {% block contentLayout %}
+      {% embed '_layouts/content/default' %}
+
+        {% block mainContent %}
+          {% cache %}
+						<h1 class="main-heading">{{ pageHeading }}</h1>
+
+						<div class="tabs bg-brand-one/10 flex mb-8">
+							<a class="text-brand-one block px-6 py-3 text-lg hover:bg-brand-one/20 duration-200 border-r border-white" href="#" onclick="return false;" onmousedown="autoScrollTo('clanky');">Články ({{ relatedArticles|length }})</a>
+							{# <a class="text-brand-one block px-6 py-3 text-lg hover:bg-brand-one/20 duration-200 border-r border-white" href="#" onclick="return false;" onmousedown="autoScrollTo('produkty');">Produkty ({{ relatedProducts|length }})</a> #}
+							<a class="text-brand-one block px-6 py-3 text-lg hover:bg-brand-one/20 duration-200 border-r border-white" href="#" onclick="return false;" onmousedown="autoScrollTo('studie');">Štúdie ({{ relatedStudies|length }})</a>
+						</div>
+
+						{# Related Articles #}
+						{% if relatedArticles %}
+							<div class="default-content">
+								<h2 id="clanky">Súvisiace články</h2>
+							
+								<div class="list">
+									{% for article in relatedArticles %}
+										<div class="list-block">
+											<div class="list-image">
+												<a href="{{ article.url }}">
+													<picture class="img-responsive">
+														<source srcset="{{ article.obrazok.one.url('obrazok') }}" type="image/webp">
+														<source srcset="{{ article.obrazok.one.url('obrazokJpeg') }}" type="image/jpeg"> 
+														<img src="{{ article.obrazok.one.url('obrazokJpeg') }}" alt="{{ article.obrazok.one.title }}">
+													</picture>
+												</a>
+											</div>
+											<div class="list-copy">
+												<h2><a href="{{ article.url }}">{{ article.pageHeading|length ? article.pageHeading : article.title }}</a></h2>
+												<p>{{ article.kratkyPopis|slice(0,150) }}</p>
+											</div>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+						{% endif %}
+          {% endcache %}
+					{% cache %}
+						{# Related Products #}
+						{# {% if relatedProducts|length %}
+							<h2 id="produkty">Súvisiace produkty</h2>
+              <div class="grid products">
+                {% for child in relatedProducts %}
+                  <div class="grid-block">
+                    <div class="grid-image">
+                      <a href="{{ child.url }}">
+                        <picture class="img-responsive">
+                          <source srcset="{{ child.obrazok.one.url('obrazokPortret') }}" type="image/webp">
+                          <source srcset="{{ child.obrazok.one.url('obrazokPortretJpeg') }}" type="image/jpeg"> 
+                          <img src="{{ child.obrazok.one.url('obrazokPortretJpeg') }}" alt="{{ child.obrazok.one.title }}">
+                        </picture>
+                      </a>
+                    </div>
+                    <h2><a href="{{ child.url }}">{{ child.title }}</a></h2>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %} #}
+					{% endcache %}
+
+					{% cache %}
+						{# Related Studies #}
+						{% if relatedStudies %}
+							<div class="default-content">
+								<h2 id="studie">Súvisiace štúdie</h2>
+								
+								<div class="list">
+									{% for article in relatedStudies %}
+										<div class="list-block pb-4 mb-8 border-b border-content-divider">
+											<div class="list-copy">
+												<h3><a class="hover:underline" href="{{ article.url }}">{{ article.pageHeading|length ? article.pageHeading : article.title }}</a></h3>
+												<p>{{ article.kratkyPopis|slice(0,150) }}</p>
+											</div>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+						{% endif %}
+					{% endcache %}
+					
+					
+      	{% endblock %}
+				{% block sidebar %}
+					{% cache %}
+						{% set tags = craft.tags.group('tagy').all() %}
+						{% if tags|length %}
+						<h2>Všetky Tagy</h2>
+							{% for tag in tags %}
+								<a href="{{ url('tags/'~tag.slug) }}"> {{ tag.title }}</a>{{ not loop.last ? ', ' }}
+							{% endfor %}
+						{% endif %}
+					{% endcache %}
+				{% endblock %}
+      {% endembed %}
+    {% endblock %}
+  {% endembed %}
+{% endblock %}

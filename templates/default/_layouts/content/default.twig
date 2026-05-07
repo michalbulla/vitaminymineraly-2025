@@ -10,25 +10,80 @@
       {% block mainContent %}
         {% cache %}
           <h1 class="main-heading">{{ pageHeading }}</h1>
+
+          {# Tagy #}
+          {% cache %}
+            {% set relatedTags = entry.tagy.all %}
+            {% if relatedTags|length %}
+              <div class="tags mb-8 text-lg">
+                <strong>Hashtags: </strong>
+                {% for rel in relatedTags %}
+                  <a class="text-content-link underline hover:no-underline" href="{{ url('tags/'~rel.slug) }}">{{ rel.title }}</a> {% if not loop.last %}, {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endcache %}
+
+          {# Akticne Latky #}
+          {% cache %}
+            {% set aktivneLatky = entry.aktivneLatkyClanky.all %}
+            {% if aktivneLatky|length %}
+              <div class="tags mb-8 text-lg">
+                <strong>Aktívne látky: </strong>
+                {% for rel in aktivneLatky %}
+                  <a class="text-content-link underline hover:no-underline" href="{{ url('aktivne-latky/'~rel.slug) }}">{{ rel.title }}</a> {% if not loop.last %}, {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endcache %}
+
+          {# Top Banner #}
+          <div class="top-banner">
+            {% include "_partials/ads/adsenseTopBanner" %}
+          </div>
+
+          {% if entry.image is defined and entry.image|length %}
+            <div class="image img-responsive right small">
+              <img src="{{ entry.image.one.url('obrazok') }}" alt="{{ entry.image.one.title }}">
+            </div>
+          {% endif %}
+
           <div class="default-content">
             {% include '_partials/contentBuilder' with {contentField: entry.mainContent, blocksDir: 'mainContent'} %}
           </div>
         {% endcache %}
       {% endblock %}
+
+      <div class="bottom-banner">
+        {% include "_partials/ads/adsenseBottomBanner" %}
+      </div>
+
+      {% if entry is defined and entry.parent %}
+        <div class="default-content">
+          <h2>Iné {{ entry.parent.title }}</h2>
+          <div class="md:grid md:grid-cols-3 md:gap-8">
+            {% for sibling in entry.parent.children.orderBy('RAND()').limit(8) %}
+              <div class="col-span-1">
+                {% if sibling.image|length %}
+                  <a href="{{ sibling.url }}">
+                    <img src="{{ sibling.image.one.url() }}" alt="">
+                  </a>
+                {% endif %}
+                <a href="{{ sibling.url }}"><h3>{{ sibling.title }}</h3></a>
+                <p>{{ sibling.kratkyPopis }}</p>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
     </div>
 
-    {% if showSidebar is defined and showSidebar %}
+    {# {% if showSidebar is defined and showSidebar %}
       <div id="sidebar" class="hidden w-[280px] flex-shrink-0 md:block">
         {% block subNav %}
           {% include '_partials/nav/sub' %}
         {% endblock %}
-
-        {# {% block sidebarContent %}
-          {% cache %}
-            {% include '_partials/contentBuilder' with {contentField: entry.sidebarContent, blocksDir: 'sidebarContent'} %}
-          {% endcache %}
-        {% endblock %} #}
       </div>
-    {% endif %}
+    {% endif %} #}
   </div>
 </div>

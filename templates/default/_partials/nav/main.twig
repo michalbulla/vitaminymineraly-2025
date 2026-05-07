@@ -1,12 +1,12 @@
 {% cache globally %}
   {% set nav = siteOptions.mainNavigation.all %}
   {% apply spaceless %}
-    <nav class="absolute left-0 z-10 hidden w-full bg-gray-600 md:bg-transparent md:w-auto md:static md:block md:py-1" id="main-nav" role="menu" tabindex="-1">
-      <ul class="list-none">
+    <nav class="absolute left-0 z-10 hidden w-full bg-brand-one md:bg-transparent md:w-auto md:static md:block md:py-1" id="main-nav" role="menu" tabindex="-1">
+      <ul class="list-none flex justify-between">
         {% for entry in nav %}
           <li class="md:relative md:inline-block group">
             <div class="flex justify-between items-center px-2 md:px-0">
-              <a class="flex-grow block md:px-4 py-3 md:py-2 font-bold md:font-black tracking-wide text-white transition-colors duration-300 ease-linear md:hover:bg-white/25 md:focus:bg-white/25 md:inline-block text-xl" role="menuitem" href="{{ entry.url }}">
+              <a class="flex-grow block md:px-4 py-3 md:py-2 font-bold md:font-black tracking-wide text-white transition-colors duration-300 ease-linear md:hover:bg-white/25 md:focus:bg-white/25 md:inline-block text-xl md:uppercase" role="menuitem" href="{{ entry.url }}">
                 {{ entry.title }}
               </a>
               {% if entry.getChildren|length %}

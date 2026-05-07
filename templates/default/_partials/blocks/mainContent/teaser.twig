@@ -1,0 +1,6 @@
+{% if block.clanok|length %}
+  <a href="{{ block.clanok.one.url }}" class="teaser">
+    <h3>{{ block.nadpis|length ? block.nadpis : block.clanok.one.title }}</h3>
+    <p>Čítaj tiež</p>
+  </a>
+{% endif %}

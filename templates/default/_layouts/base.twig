@@ -15,7 +15,7 @@
   {# Favorite Icons #}
   {# Link to the favicons process:
   https://docs.google.com/document/d/1tfcjhdlop5TVMAuf5tRVrpnLC3XcgR8sPCRJZu5RyvA/edit#heading=h.o81pnonmirdd #}
-  {# {% include '_partials/favicon' %} #}
+  {% include '_partials/favicon' %}
 
   {# Include all CSS collected through 'css' and 'view.registerCssFile(url)' #}
   {{ head() }}
@@ -27,7 +27,7 @@
   {% include '_shared/globalScripts' with {globalScripts: globalScripts, position: 'head'} %}
 
 </head>
-<body class="font-primary text-content-text">
+<body class="font-primary text-content-text bg-brand-one">
   {% include '_shared/globalScripts' with {globalScripts: globalScripts, position: 'bodyBegin'} %}
   <a href="#main-content-start" class="sr-only sr-only-focusable" title="Skip over the navigation directly to main content of the page">Skip to main content</a>
   {% block pageLayout %}

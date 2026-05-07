@@ -1,0 +1,182 @@
+{% extends "_layouts/base" %}
+{% set uri = entry.uri|default('blog') %}
+{% set pageHeading = 'Články' %}
+
+{% set showSidebar = false %}
+
+{% block pageLayout %}
+  {% embed '_layouts/page/default' %}
+    {% block subNavMobile %}{% endblock %}
+    {% block contentLayout %}
+      {% embed '_layouts/content/default' %}
+
+        {% block mainContent %}
+          {% cache %}
+            <h1>{{ pageHeading }}</h1>
+
+
+            {# Aminokyseliny #}
+            {% set aminokyseliny = craft.entries.section('pages').id(13690).one %}
+            {% set articles = aminokyseliny.getChildren.limit(12) %}
+            <h2>Aminokyseliny</h2>
+            <div class="grid">
+              {% for article in articles %}
+                <div class="grid-block">
+                  <div class="grid-image">
+                    <a href="{{ article.url }}">
+                      <picture class="img-responsive">
+                        <source srcset="{{ article.image.one.url('obrazok') }}" type="image/webp">
+                        <source srcset="{{ article.image.one.url('obrazok') }}" type="image/jpeg"> 
+                        <img src="{{ article.image.one.url('obrazok') }}" alt="{{ article.image.one.title }}">
+                      </picture>
+                    </a>
+                  </div>
+                  <div class="grid-copy">
+                    <h2><a href="{{ article.url }}">{{ article.pageHeading|length ? article.pageHeading : article.title }}</a></h2>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+            <a class="btn" href="{{ '{entry:18168:url}' | parseRefs }}">Ďalšie {{ '{entry:18168:title}' | parseRefs }}</a>
+            <hr/><hr/>
+
+            {# Enzýmy #}
+            {% set enzymy = craft.entries.section('pages').id(14567).one %}
+            {% set articles = enzymy.getChildren.limit(12) %}
+            <h2>Enzýmy</h2>
+            <div class="grid">
+              {% for article in articles %}
+                <div class="grid-block">
+                  <div class="grid-image">
+                    <a href="{{ article.url }}">
+                      <picture class="img-responsive">
+                        <source srcset="{{ article.image.one.url('obrazok') }}" type="image/webp">
+                        <source srcset="{{ article.image.one.url('obrazok') }}" type="image/jpeg"> 
+                        <img src="{{ article.image.one.url('obrazok') }}" alt="{{ article.image.one.title }}">
+                      </picture>
+                    </a>
+                  </div>
+                  <div class="grid-copy">
+                    <h2><a href="{{ article.url }}">{{ article.pageHeading|length ? article.pageHeading : article.title }}</a></h2>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            <a class="btn" href="{{ '{entry:14567:url}' | parseRefs }}">Ďalšie {{ '{entry:14567:title}' | parseRefs }}</a>
+            <hr/><hr/>
+
+
+            {# Mineraly #}
+            {% set mineraly = craft.entries.section('pages').id(13690).one %}
+            {% set articles = mineraly.getChildren.limit(12) %}
+            <h2>Minerály</h2>
+            <div class="grid">
+              {% for article in articles %}
+                <div class="grid-block">
+                  <div class="grid-image">
+                    <a href="{{ article.url }}">
+                      <picture class="img-responsive">
+                        <source srcset="{{ article.image.one.url('obrazok') }}" type="image/webp">
+                        <source srcset="{{ article.image.one.url('obrazok') }}" type="image/jpeg"> 
+                        <img src="{{ article.image.one.url('obrazok') }}" alt="{{ article.image.one.title }}">
+                      </picture>
+                    </a>
+                  </div>
+                  <div class="grid-copy">
+                    <h2><a href="{{ article.url }}">{{ article.pageHeading|length ? article.pageHeading : article.title }}</a></h2>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            <a class="btn" href="{{ '{entry:13690:url}' | parseRefs }}">Ďalšie {{ '{entry:13690:title}' | parseRefs }}</a>
+            <hr/><hr/>
+
+            {# Probiotiká #}
+            {% set probiotika = craft.entries.section('pages').id(14888).one %}
+            {% set articles = probiotika.getChildren.limit(12) %}
+            <h2>Probiotiká</h2>
+            <div class="grid">
+              {% for article in articles %}
+                <div class="grid-block">
+                  <div class="grid-image">
+                    <a href="{{ article.url }}">
+                      <picture class="img-responsive">
+                        <source srcset="{{ article.image.one.url('obrazok') }}" type="image/webp">
+                        <source srcset="{{ article.image.one.url('obrazok') }}" type="image/jpeg"> 
+                        <img src="{{ article.image.one.url('obrazok') }}" alt="{{ article.image.one.title }}">
+                      </picture>
+                    </a>
+                  </div>
+                  <div class="grid-copy">
+                    <h2><a href="{{ article.url }}">{{ article.pageHeading|length ? article.pageHeading : article.title }}</a></h2>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            <a class="btn" href="{{ '{entry:14888:url}' | parseRefs }}">Ďalšie {{ '{entry:14888:title}' | parseRefs }}</a>
+            <hr/><hr/>
+
+
+            {# Vitaminy #}
+            {% set vitaminy = craft.entries.section('pages').id(394).one %}
+            {% set articles = vitaminy.getChildren.limit(12) %}
+            <h2>Vitamíny</h2>
+            <div class="grid">
+              {% for article in articles %}
+                <div class="grid-block">
+                  <div class="grid-image">
+                    <a href="{{ article.url }}">
+                      <picture class="img-responsive">
+                        <source srcset="{{ article.image.one.url('obrazok') }}" type="image/webp">
+                        <source srcset="{{ article.image.one.url('obrazok') }}" type="image/jpeg"> 
+                        <img src="{{ article.image.one.url('obrazok') }}" alt="{{ article.image.one.title }}">
+                      </picture>
+                    </a>
+                  </div>
+                  <div class="grid-copy">
+                    <h2><a href="{{ article.url }}">{{ article.pageHeading|length ? article.pageHeading : article.title }}</a></h2>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            <a class="btn" href="{{ '{entry:394:url}' | parseRefs }}">Ďalšie {{ '{entry:394:title}' | parseRefs }}</a>
+            <hr/><hr/>
+            
+
+            {# Výživové doplnky #}
+            {% set vyzDoplnky = craft.entries.section('pages').id(14984).one %}
+            {% set articles = vyzDoplnky.getChildren.limit(12) %}
+            <h2>Výživové doplnky</h2>
+            <div class="grid">
+              {% for article in articles %}
+                <div class="grid-block">
+                  <div class="grid-image">
+                    <a href="{{ article.url }}">
+                      <picture class="img-responsive">
+                        <source srcset="{{ article.image.one.url('obrazok') }}" type="image/webp">
+                        <source srcset="{{ article.image.one.url('obrazok') }}" type="image/jpeg"> 
+                        <img src="{{ article.image.one.url('obrazok') }}" alt="{{ article.image.one.title }}">
+                      </picture>
+                    </a>
+                  </div>
+                  <div class="grid-copy">
+                    <h2><a href="{{ article.url }}">{{ article.pageHeading|length ? article.pageHeading : article.title }}</a></h2>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            <a class="btn" href="{{ '{entry:14984:url}' | parseRefs }}">Ďalšie {{ '{entry:14984:title}' | parseRefs }}</a>
+            <hr/><hr/>
+
+            
+          {% endcache %}
+        {% endblock %}
+      {% endembed %}
+    {% endblock %}
+  {% endembed %}
+{% endblock %}

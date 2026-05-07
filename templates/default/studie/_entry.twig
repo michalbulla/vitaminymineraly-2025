@@ -1,0 +1,92 @@
+{% extends "_layouts/base" %}
+{% set uri = entry.uri|default('blog') %}
+{% set pageHeading = entry.pageHeading|default(entry.title) %}
+
+{% set showSidebar = false %}
+
+{% block pageLayout %}
+  {% embed '_layouts/page/default' %}
+    {% block contentLayout %}
+      {% embed '_layouts/content/default' %}
+
+        {% block mainContent %}
+          {% cache %}
+            <h1 class="main-heading">{{ pageHeading }}</h1>
+            {% set relatedTags = entry.tagy.all %}
+            {% if relatedTags|length %}
+              <div class="tags mb-8 text-lg">
+                <strong>Hashtags: </strong>
+                {% for rel in relatedTags %}
+                  <a class="text-content-link underline hover:no-underline" href="{{ url('tags/'~rel.slug) }}">{{ rel.title }}</a> {% if not loop.last %}, {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            {% set aktivneLatky = entry.aktivneLatkyClanky.all %}
+            {% if aktivneLatky|length %}
+              <div class="tags mb-8 text-lg">
+                <strong>Aktívne látky: </strong>
+                {% for rel in aktivneLatky %}
+                  <a class="text-content-link underline hover:no-underline" href="{{ url('aktivne-latky/'~rel.slug) }}">{{ rel.title }}</a> {% if not loop.last %}, {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <div class="top-banner">
+              {% include "_partials/ads/adsenseTopBanner" %}
+            </div>
+
+            <div class="default-content">
+              {% include '_partials/contentBuilder' with {contentField: entry.mainContent, blocksDir: 'mainContent'} %}
+            </div>
+            <div class="btn-wrap">
+              <a href="/studie" class="btn">Všetky štúdie</a>
+            </div>
+          {% endcache %}
+          <div class="bottom-banner">
+            {% include "_partials/ads/adsenseBottomBanner" %}
+          </div>
+          {% cache %}
+            {% set relatedStudies = craft.entries.section('studie').relatedTo(['or', aktivneLatky, relatedTags]).id('not ' ~ entry.id).limit(3) %}
+            {% if relatedStudies|length %}
+              <div class="default-content">
+                <h2>Podobné štúdie</h2>
+                <div class="list">
+                  {% for article in relatedStudies %}
+                    <div class="list-block border-b border-content-divider pb-2 mb-4">
+                      <div class="list-copy">
+                        <h3><a class="underline hover:no-underline" href="{{ article.url }}">{{ article.pageHeading|length ? article.pageHeading : article.title }}</a></h3>
+                        <p>{{ article.kratkyPopis|slice(0,150) }}</p>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endcache %}
+          {% cache %}
+            {% set relatedStudies = craft.entries.section('clanky').relatedTo(['or', aktivneLatky, relatedTags]).id('not ' ~ entry.id).limit(3) %}
+            {% if relatedStudies|length %}
+              <div class="default-content">
+                <h2>Podobné články</h2>
+                <div class="list">
+                  {% for article in relatedStudies %}
+                    <div class="list-block">
+                      <div class="list-copy">
+                        <h3><a href="{{ article.url }}">{{ article.pageHeading|length ? article.pageHeading : article.title }}</a></h3>
+                        <p>{{ article.kratkyPopis|slice(0,150) }}</p>
+                        <div class="btn-wrap">
+                          <a href="{{ article.url }}" class="btn">Čítaj viac</a>
+                        </div>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endcache %}
+        {% endblock %}
+      {% endembed %}
+    {% endblock %}
+  {% endembed %}
+{% endblock %}
