@@ -12,18 +12,15 @@
 
         {% block mainContent %}
           {% cache %}
-            <h1>{{ pageHeading }}</h1>
+            <h1 class="main-heading">{{ pageHeading }}</h1>
             
             {% paginate craft.entries.section('studie').limit(10) as paginate, articles %}
-            <div class="list">
+            <div class="list default-content">
               {% for article in articles %}
-                <div class="list-block">
+                <div class="list-block border-b border-content-divider pb-2 mb-4">
                   <div class="list-copy">
                     <h2><a href="{{ article.url }}">{{ article.pageHeading|length ? article.pageHeading : article.title }}</a></h2>
                     <p>{{ article.kratkyPopis }}</p>
-                    <div class="btn-wrap">
-                      <a href="{{ article.url }}" class="btn">Čítaj viac</a>
-                    </div>
                   </div>
                 </div>
               {% endfor %}

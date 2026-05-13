@@ -1,0 +1,59 @@
+{% apply spaceless %}
+  {# ------ seoTitle ---------------------------------------- #}
+  {% set seoTitle = seoTitle|default(pageHeading) %}
+  {% if entry is defined and entry.seoTitle is defined and entry.seoTitle is not empty %}{% set seoTitle = entry.seoTitle %}{% endif %}
+  {% if entry is defined and  seoTitle is empty and entry.title is defined and entry.title is not empty %}{% set seoTitle = entry.title %}{% endif %}
+
+  {# ------ siteSeoName ------------------------------------- #}
+  {% set siteSeoName = "| #{siteName}" %}
+  {% if seoSettings.siteSeoName is defined and seoSettings.siteSeoName is not empty %}{% set siteSeoName = seoSettings.siteSeoName %}{% endif %}
+
+  {# ------ seoDescription ---------------------------------- #}
+  {% set seoDescription = seoDescription|default('') %}
+  {% if entry is defined and  entry.seoDescription is defined and entry.seoDescription is not empty %}{% set seoDescription = entry.seoDescription %}{% endif %}
+  {% if seoDescription is empty and seoSettings.siteSeoDescription is defined and seoSettings.siteSeoDescription is not empty %}{% set seoDescription = seoSettings.siteSeoDescription %}{% endif %}
+
+  {# ------ seoUrl ------------------------------------------ #}
+  {% set seoUrl = craft.app.request.absoluteUrl %}
+  {% if entry is defined and  entry.url is defined and entry.url is not empty %}{% set seoUrl = entry.url %}{% endif %}
+
+  {# ------ seoImage ------------------------------------------ #}
+  {% set seoImage = seoSettings.siteSeoImage is defined and seoSettings.siteSeoImage|length ? seoSettings.siteSeoImage.one.url() %}
+  {% if entry is defined and  entry.image is defined and entry.image|length %}{% set seoImage = entry.image.one.url %}{% endif %}
+  {% if entry is defined and  entry.seoImage is defined and entry.seoImage|length %}{% set seoImage = entry.seoImage.one.url %}{% endif %}
+
+  {# ------ seoAnalyticsId ---------------------------------- #}
+  {% set seoAnalyticsId = false %}
+  {% if craft.app.config.env == 'production' and seoSettings.analyticsId is defined and seoSettings.analyticsId is not empty %}{% set seoAnalyticsId = seoSettings.analyticsId %}{% endif %}
+{% endapply %}
+<!-- BEGIN SEO Meta -->
+
+<title>{{ seoTitle }} {{ siteSeoName }}</title>
+
+<!-- BEGIN OpenGraph -->
+
+<meta property="og:title" content="{{ seoTitle }} {{ siteSeoName }}" />
+<meta property="og:description" content="{{ seoDescription }}" />
+<meta property="og:image" content="{{ seoImage }}" />
+
+<!-- Standard SEO -->
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="robots" content="all">
+<meta name="description" content="{{ seoDescription }}">
+
+{% if seoAnalyticsId %}
+<!-- Google Analytics -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ seoAnalyticsId }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '{{ seoAnalyticsId }}');
+  </script>
+{% endif %}
+
+<!-- END SEO Meta -->

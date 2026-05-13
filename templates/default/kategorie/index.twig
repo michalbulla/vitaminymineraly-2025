@@ -16,11 +16,13 @@
               <div class="md:grid md:grid-cols-3 md:gap-8 mb-12">
                 {% for child in entry.descendants.all() %}
                   <div class="grid-block col-span-1">
-                    <div class="grid-image ">
-                      <a href="{{ child.url }}">
-                        <img class="img-responsive" src="{{ child.image.one.url('obrazok') }}" alt="{{ child.image.one.title }}">
-                      </a>
-                    </div>
+                    {% if child.image|length %}
+                      <div class="grid-image ">
+                        <a href="{{ child.url }}">
+                          <img class="img-responsive" src="{{ child.image.one.url('obrazok') }}" alt="{{ child.image.one.title }}">
+                        </a>
+                      </div>
+                    {% endif %}
                     <h2 class="text-center font-bold text-2xl text-brand-one mt-2"><a href="{{ child.url }}">{{ child.title }}</a></h2>
                   </div>
                 {% endfor %}

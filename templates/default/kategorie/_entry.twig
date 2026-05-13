@@ -40,7 +40,7 @@
                         </picture>
                       </a>
                     </div>
-                    <h2><a href="{{ child.url }}">{{ child.title }}</a></h2>
+                    <h2 class="text-center font-bold text-2xl text-brand-one mt-2"><a href="{{ child.url }}">{{ child.title }}</a></h2>
                     {% set relatedShops = craft.entries.section('obchodProdukt').relatedTo(child) %}
                     {% set randomRelatedShop = random(relatedShops) %}
                     <a href="{{ randomRelatedShop.obchod.one.affiliateCode|length ? randomRelatedShop.obchod.one.affiliateCode ~ '&url=' }}{{ randomRelatedShop.produktUrl }}" target="_blank" class="btn no-arrow text-center">Pozri v obchode</a>
