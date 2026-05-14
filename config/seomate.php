@@ -45,14 +45,26 @@ return [
           'elementType' => \craft\elements\Entry::class,
           'criteria' => [
             'section' => [
-              'pages'
+              'pages',
             ],
             'type' => [
-              'defaultContent',
+              'defaultPage',
               'indexPage'
             ]
           ],
-          'params' => ['changefreq' => 'weekly', 'priority' => 0.5],
+          'params' => ['changefreq' => 'weekly', 'priority' => 1],
+        ],
+        'studie' => [
+          'elementType' => \craft\elements\Entry::class,
+          'criteria' => [
+            'section' => [
+              'studie',
+            ],
+            'type' => [
+              'studia'
+            ]
+          ],
+          'params' => ['changefreq' => 'weekly', 'priority' => 1],
         ],
       ],
     ],
