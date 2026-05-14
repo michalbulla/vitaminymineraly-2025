@@ -13,7 +13,7 @@
           {% cache %}
             <h1 class="main-heading">{{ pageHeading }}</h1>
             {% if entry.descendants|length %}
-              <div class="md:grid md:grid-cols-3 md:gap-8 mb-12">
+              <div class="sm:grid sm:grid-cols-2 md:grid-cols-3 sm:gap-8 mb-12">
                 {% for child in entry.descendants.all() %}
                   <div class="grid-block col-span-1">
                     {% if child.image|length %}

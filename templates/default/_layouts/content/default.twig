@@ -61,7 +61,7 @@
       {% if entry is defined and entry.parent %}
         <div class="default-content">
           <h2>Iné {{ entry.parent.title }}</h2>
-          <div class="md:grid md:grid-cols-3 md:gap-8">
+          <div class="sm:grid sm:grid-cols-2 md:grid-cols-3 sm:gap-8">
             {% for sibling in entry.parent.children.orderBy('RAND()').limit(8) %}
               <div class="col-span-1">
                 {% if sibling.image|length %}

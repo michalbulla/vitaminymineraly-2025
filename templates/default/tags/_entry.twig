@@ -41,7 +41,7 @@
 							
 								<div class="list">
 									{% for article in relatedArticles %}
-										<div class="list-block md:grid md:grid-cols-3 gap-6 border-b border-content-divider pb-4 mb-8">
+										<div class="list-block sm:grid sm:grid-cols-3 gap-6 border-b border-content-divider pb-4 mb-8">
 											<div class="list-image col-span-1">
 												<a href="{{ article.url }}">
 													<img class="img-responsive" src="{{ article.image.one.url('obrazok') }}" alt="{{ article.image.one.title }}">
