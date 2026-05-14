@@ -6,7 +6,7 @@
 {% set thisTag = craft.tags.slug(tag).one %}
 
 {# Related Articles #}
-{% set relatedArticles = craft.entries.section(['hlavneStranky', 'clanky']).relatedTo(thisTag).all() %}
+{% set relatedArticles = craft.entries.section(['pages', 'clanky']).relatedTo(thisTag).all() %}
 
 {# Related Products #}
 {# {% set relatedProducts = craft.entries.section('produkty').relatedTo(thisTag).all() %} #}
@@ -41,18 +41,14 @@
 							
 								<div class="list">
 									{% for article in relatedArticles %}
-										<div class="list-block">
-											<div class="list-image">
+										<div class="list-block md:grid md:grid-cols-3 gap-6 border-b border-content-divider pb-4 mb-8">
+											<div class="list-image col-span-1">
 												<a href="{{ article.url }}">
-													<picture class="img-responsive">
-														<source srcset="{{ article.obrazok.one.url('obrazok') }}" type="image/webp">
-														<source srcset="{{ article.obrazok.one.url('obrazokJpeg') }}" type="image/jpeg"> 
-														<img src="{{ article.obrazok.one.url('obrazokJpeg') }}" alt="{{ article.obrazok.one.title }}">
-													</picture>
+													<img class="img-responsive" src="{{ article.image.one.url('obrazok') }}" alt="{{ article.image.one.title }}">
 												</a>
 											</div>
-											<div class="list-copy">
-												<h2><a href="{{ article.url }}">{{ article.pageHeading|length ? article.pageHeading : article.title }}</a></h2>
+											<div class="list-copy col-span-2">
+												<h2 class="!mt-0"><a href="{{ article.url }}">{{ article.pageHeading|length ? article.pageHeading : article.title }}</a></h2>
 												<p>{{ article.kratkyPopis|slice(0,150) }}</p>
 											</div>
 										</div>
@@ -110,11 +106,13 @@
 					{% cache %}
 						{% set tags = craft.tags.group('tagy').all() %}
 						{% if tags|length %}
-						<h2>Všetky Tagy</h2>
-							{% for tag in tags %}
-								<a href="{{ url('tags/'~tag.slug) }}"> {{ tag.title }}</a>{{ not loop.last ? ', ' }}
-							{% endfor %}
-						{% endif %}
+						<div class="default-content">
+							<h2 class="!text-2xl">Všetky Tagy</h2>
+								{% for tag in tags %}
+									<a class="text-content-link underline hover:no-underline" href="{{ url('tags/'~tag.slug) }}"> {{ tag.title }}</a>{{ not loop.last ? ', ' }}
+								{% endfor %}
+							{% endif %}
+						</div>
 					{% endcache %}
 				{% endblock %}
       {% endembed %}

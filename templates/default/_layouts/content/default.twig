@@ -78,12 +78,14 @@
       {% endif %}
     </div>
 
-    {# {% if showSidebar is defined and showSidebar %}
-      <div id="sidebar" class="hidden w-[280px] flex-shrink-0 md:block">
-        {% block subNav %}
-          {% include '_partials/nav/sub' %}
+    {% if showSidebar is defined and showSidebar == true %}
+      <div class="sidebar flex-[320px] flex-grow-0 flex-shrink-0">
+        {% block sidebar %}
+          {# {% block subNav %}
+            {% include '_partials/nav/sub' %}
+          {% endblock %} #}
         {% endblock %}
       </div>
-    {% endif %} #}
+    {% endif %}
   </div>
 </div>

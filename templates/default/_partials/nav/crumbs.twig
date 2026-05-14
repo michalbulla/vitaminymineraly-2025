@@ -2,7 +2,7 @@
   {% apply spaceless %}
     <ul class="my-3 space-x-2 text-sm text-gray-500 mb-12 mt-4">
       <li class="inline-block"><a href="/">Domovská stránka</a></li>
-      {% if entry.type != 'home' %}
+      {% if entry is defined and entry.type != 'home' %}
         <li class="inline-block">/</li>
       {% endif %}
       {% if entry is defined %}
@@ -10,11 +10,12 @@
           <li class="inline-block">{{ crumb.getLink() }}</li>
           <li class="inline-block">/</li>
         {% endfor %}
-        {% if entry.type != 'home' %}
+        {% if entry is defined and entry.type != 'home' %}
           <li class="inline-block">{{ entry.title }}</li>
         {% endif %}
       {% endif %}
       {% if thisTag is defined %}
+        <li class="inline-block">/</li>
         <li class="inline-block">{{ thisTag.title }}</li>
       {% endif %}
     </ul>

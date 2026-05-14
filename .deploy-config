@@ -1,6 +1,6 @@
 CRAFT_VERSION=craft5
-SITE_NAME=vitaminymineraly
+SITE_NAME=vitaminymineraly 
 BETA_SERVER=server2025.embis.sk
-BETA_DOMAIN=vitaminymineraly.dev2025.embis.sk
+BETA_DOMAIN=vitaminymineraly .dev2025.embis.sk
 LIVE_SERVER=server2025.embis.sk
-LIVE_DOMAIN=vitaminymineraly.sk
+LIVE_DOMAIN=vitaminymineraly .sk
